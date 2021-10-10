@@ -5,9 +5,8 @@ from kivy.clock import Clock
 
 from kivymd.uix.screen import MDScreen
 from Utility.observer import Observer
-from View.MainScreen import components
-
-from View.MainScreen.components.barber_card import BarberCard
+from View.MainScreen.components import barber_card
+from View.MainScreen.components import scroll_layout
 
 class MainScreenView(MDScreen, Observer):
     """
@@ -44,7 +43,6 @@ class MainScreenView(MDScreen, Observer):
     def __init__(self, **kw):
         super().__init__(**kw)
         self.model.add_observer(self)
-
     def on_pre_enter(self, *args):
         self.controller.refresh_callback()
 
@@ -53,7 +51,7 @@ class MainScreenView(MDScreen, Observer):
         barbers = self.controller.get_barbers()
         for barber, data in barbers.items():
             # Imagen, Nombre, Ubicacion, Administrador, celular,
-            widget = BarberCard(data=data)
+            widget = barber_card.BarberCard(data=data)
             self.ids.barbers_grid.add_widget(widget)
             self.ids.refresh_layout.refresh_done()
 

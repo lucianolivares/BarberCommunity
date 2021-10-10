@@ -1,12 +1,31 @@
 #:import images_path kivymd.images_path
 
+
 <MainScreenView>
     md_bg_color: 1, 1, 1, 1
     MDGridLayout:
         md_bg_color: 0, 0, 0, 0.1
         cols: 1
+        
+        MDGridLayout:
+            canvas:
+                Color:
+                    rgba: (0, 0, 0, 0.5)
+                Line:
+                    width: dp(0.25)
+                    points: self.x, self.y, self.width, self.y
 
-        MDScrollViewRefreshLayout:
+            adaptive_height: True
+            height: dp(50)
+            padding: (dp(40), 0, dp(40), 0)
+            spacing: (dp(20),)
+            cols: 2
+            MDLabel:
+                font_style: 'H5'
+                font_name: 'assets/fonts/Barbershop.ttf'
+                text: 'Barberias Disponibles'
+            
+        ScrollLayout:
             id: refresh_layout
             refresh_callback: root.controller.refresh_callback
             root_layout: root
@@ -20,12 +39,26 @@
                 row_default_height: dp(150)
         
         MDGridLayout:
+            canvas:
+                Color:
+                    rgba: (0, 0, 0, 0.5)
+                Line:
+                    width: dp(0.25)
+                    points: self.x, self.height, self.width, self.height
+
             adaptive_height: True
             height: dp(50)
-            rows: 1
-            Button:
-            Button:
-            Button:
-            Button:
-            Button:
+            padding: (dp(40), 0, dp(40), 0)
+            spacing: (dp(20),)
+            cols: 5
+            MDIconButton:
+                icon: "face-man-shimmer"
+            MDIconButton:
+                icon: 'google-my-business'
+            MDIconButton:
+                icon: 'checkbox-multiple-marked'
+            MDIconButton:
+                icon: 'map-legend'
+            MDIconButton:
+                icon: 'account-circle'
 
