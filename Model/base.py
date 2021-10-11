@@ -1,5 +1,4 @@
 import firebase_admin
-from firebase_admin import credentials
 from firebase_admin import firestore
 from typing import Union
 import requests
@@ -21,6 +20,18 @@ class Base:
 
         try:
             data = self.client.collection('barbershops').get()
+        except requests.exceptions.ConnectionError:
+            return None
+        return data
+    
+    def get_barber(self, id) -> Union[dict, None]:
+        """
+        Return colletion from the database:
+        """
+
+        try:
+            data = self.client.collection('barbershops')
+            data = data.document(id).get()
         except requests.exceptions.ConnectionError:
             return None
         return data

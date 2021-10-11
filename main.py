@@ -1,20 +1,9 @@
-
-"""
-Script for managing hot reloading of the project.
-For more details see the documentation page -
-
-https://kivymd.readthedocs.io/en/latest/api/kivymd/tools/patterns/create_project/
-
-To run the application in hot boot mode, execute the command in the console:
-DEBUG=1 python main.py
-"""
-
 import importlib
 import os
 from typing import NoReturn
 
 from kivy import Config
-from kivy.uix.screenmanager import ScreenManager
+from kivy.uix.screenmanager import NoTransition, ScreenManager
 
 from PIL import ImageGrab
 
@@ -22,8 +11,8 @@ from PIL import ImageGrab
 resolution = ImageGrab.grab().size
 
 # Change the values of the application window size as you need.
-Config.set("graphics", "height", '1015')
-Config.set("graphics", "width", "400")
+Config.set("graphics", "height", '800')
+Config.set("graphics", "width", "480")
 #Config.set("graphics", "height", resolution[1])
 #Config.set("graphics", "width", "400")
 
@@ -52,6 +41,12 @@ class BarberCommunity(MDApp):
             "LoginScreen",
             "login_screen.kv",
         ),
+        os.path.join(
+            os.getcwd(),
+            "View",
+            "ProfileScreen",
+            "profile_screen.kv",
+        ),
     }
 
     def build_app(self) -> ScreenManager:
@@ -63,7 +58,7 @@ class BarberCommunity(MDApp):
         import View.screens
 
         self.theme_cls.primary_palette = "Red"
-        self.manager_screens = ScreenManager()
+        self.manager_screens = ScreenManager(transition=NoTransition())
         self.base = Base()
         Window.bind(on_key_down=self.on_keyboard_down)
         importlib.reload(View.screens)

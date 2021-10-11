@@ -1,19 +1,20 @@
+from kivy.uix.behaviors.button import ButtonBehavior
 from kivymd.uix.card import MDCard
 from kivy.lang import Builder
-from kivymd.uix.label.label import MDLabel
-
+from kivy.properties import ObjectProperty
 
 Builder.load_string('''
 <BarberCard>:
     md_bg_color: 1, 1, 1, 0.9
     elevation: 10
-    radius: (36,)
-
+    radius: (20,)
 
     FitImage:
-        radius: (36, 0, 0,36)
+        id: image
+        radius: (20, 0, 0,20)
         size_hint_x: 0.4
-        source: 'assets/images/default.jpeg'
+        # Cargar imagenes de storage proto
+        source: 'assets/images/'
 
     BoxLayout:
         id: labels
@@ -21,30 +22,49 @@ Builder.load_string('''
         padding: 8
         MDLabel:
             id: name
-            text: 'Nombre: '
+            markup: True
+            shorten:True
+            text: 'Nombre: [b]'
             #md_bg_color: 1, 0, 0, 0.2
         MDLabel:
             id: address
-            text: 'Ubicacion: '
+            markup: True
+            shorten:True
+            text: 'Ubicacion: [b]'
         MDLabel:
             id: city
-            text: 'Ciudad: '
+            markup: True
+            shorten:True
+            text: 'Ciudad: [b]'
         MDLabel:
             id: owner
-            text: 'Dueno: '
+            markup: True
+            shorten:True
+            text: 'Dueño: [b]'
         MDLabel:
             id: mobile
-            text: 'Celular: '
+            markup: True
+            shorten:True
+            text: 'Celular: [b]'
 '''
 )
 
-class BarberCard(MDCard):
+class BarberCard(MDCard, ButtonBehavior):
+
     def __init__(self, **kw):
         super().__init__()
-        self.kind_dialog = kw['data']
-        for key, value in self.kind_dialog.items():
+        self.controller = kw['controller']
+        self.barber = kw['data']
+        self.id = kw['id']
+        self.on_release = self.get_barber
+
+        for key, value in self.barber.items():
             if key == 'mobile':
                 self.ids[f'{key}'].text += str(value[4:])
+            elif key == 'image':
+                self.ids[f'{key}'].source += str(value)
             else:
                 self.ids[f'{key}'].text += str(value)
 
+    def get_barber(self):
+        self.controller.get_barber(self.id)

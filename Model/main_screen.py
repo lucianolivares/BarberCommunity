@@ -1,19 +1,10 @@
-# The model implements the observer pattern. This means that the class must
-# support adding, removing, and alerting observers. In this case, the model is
-# completely independent of controllers and views. It is important that all
-# registered observers implement a specific method that will be called by the
-# model when they are notified (in this case, it is the `model_is_changed`
-# method). For this, observers must be descendants of an abstract class,
-# inheriting which, the `model_is_changed` method must be overridden.
 import multitasking
-
 
 multitasking.set_max_threads(10)
 
 class MainScreenModel:
     def __init__(self, base):
         self.base = base
-
         self.barbers = dict()
         self._get_data_status = None
         self._observers = []
@@ -48,6 +39,12 @@ class MainScreenModel:
 
         self.barbers = barbers
         self.get_data_status = True
+
+    @multitasking.task
+    def get_barber(self, id):
+        data = self.base.get_barber(id)
+        print(self.screen)
+
 
     
     def add_observer(self, observer):

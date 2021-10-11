@@ -31,7 +31,7 @@ Builder.load_string('''
         canvas:
             Clear
             Color:
-                rgba: (1, 0, 0, 1)
+                rgba: (1, 0, 0, 0)
             Ellipse:
                 pos: self.pos
                 size: self.size
@@ -40,7 +40,7 @@ Builder.load_string('''
             id: spinner
             size_hint: None, None
             size: dp(30), dp(30)
-            color: 0, 0, 0, 0.8
+            color: app.theme_cls.primary_color
             line_width: dp(3)
 ''')
 

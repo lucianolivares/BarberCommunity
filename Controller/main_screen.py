@@ -18,5 +18,8 @@ class MainScreenController:
     def get_barbers(self):
         return self.model.barbers
 
+    def get_barber(self, id):
+        self.model.get_barber(id)
+
     def get_view(self) -> View.MainScreen.main_screen.MainScreenView:
         return self.view
