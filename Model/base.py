@@ -13,7 +13,7 @@ class Base:
 
         self.client = firestore.client(self.cloud)
 
-    def get_barbers_data(self) -> Union[dict, None]:
+    def get_barbers_data(self) -> Union[list, None]:
         """
         Return colletion from the database:
         """
@@ -31,7 +31,7 @@ class Base:
 
         try:
             data = self.client.collection('barbershops')
-            data = data.document(id).get()
+            data = data.document(id).get().to_dict()
         except requests.exceptions.ConnectionError:
             return None
         return data

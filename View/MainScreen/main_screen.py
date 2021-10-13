@@ -17,6 +17,7 @@ class MainScreenView(MDScreen, Observer):
         super().__init__(**kw)
         self.model.add_observer(self)
         self.controller.refresh_callback()
+        self.ids.refresh_layout.start_spinner()
         self.ids.topbar.ids.title.text = 'Barberias'
         self.ids.navbar.ids.barbers_button.icon = 'face-man-shimmer'
 
@@ -28,6 +29,12 @@ class MainScreenView(MDScreen, Observer):
             self.ids.barbers_grid.add_widget(card)
             self.ids.refresh_layout.refresh_done()
 
+    def load_barber(self):
+        #self.ids.barbers_grid.clear_widgets()
+        barber = self.model.barber
+        card = barber_card.BarberCard(data=barber, id=barber, controller=self.controller)
+        self.ids.barbers_grid.add_widget(card)
+        
     def model_is_changed(self) -> NoReturn:
         if self.model.get_data_status:
             Clock.schedule_once(self.load_barbers, 1)

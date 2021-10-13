@@ -100,6 +100,11 @@ class ScrollLayout(ScrollView):
             return True
 
         return super().on_touch_up(*args)
+    
+    def start_spinner(self):
+        self.refresh_spinner = RefreshSpinner(_refresh_layout=self)
+        self.root_layout.add_widget(self.refresh_spinner)
+        self.refresh_spinner.start_anim_spinner()
 
     def refresh_done(self) -> NoReturn:
         if self.refresh_spinner:

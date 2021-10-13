@@ -6,6 +6,7 @@ class MainScreenModel:
     def __init__(self, base):
         self.base = base
         self.barbers = dict()
+        self.barber = dict()
         self._get_data_status = None
         self._observers = []
         
@@ -43,10 +44,8 @@ class MainScreenModel:
     @multitasking.task
     def get_barber(self, id):
         data = self.base.get_barber(id)
-        print(self.screen)
+        self.barber = data
 
-
-    
     def add_observer(self, observer):
         self._observers.append(observer)
 
