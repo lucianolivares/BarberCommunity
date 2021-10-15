@@ -1,11 +1,8 @@
 import multitasking
 
-multitasking.set_max_threads(10)
-
-class MainScreenModel:
+class DetailScreenModel:
     def __init__(self, base):
         self.base = base
-        self.barbers = dict()
         self.barber = dict()
         self._get_data_status = None
         self._observers = []
@@ -23,22 +20,10 @@ class MainScreenModel:
         self.notify_observers()
 
     @multitasking.task
-    def check_data(self):
-        """
-        Get data from the database and compares this data with the data entered
-        by the user.
-        This method is completely asynchronous. It does not return any value.
-        """
-        data = self.base.get_barbers_data()
+    def get_barber(self, id):
         self.get_data_status = False
-        barbers = dict()
-
-        for barber in data:
-            id = barber.id
-            barber = barber.to_dict()
-            barbers[id] = barber
-
-        self.barbers = barbers
+        data = self.base.get_barber(id)
+        self.barber = data
         self.get_data_status = True
 
     def add_observer(self, observer):

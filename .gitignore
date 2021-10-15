@@ -10,6 +10,7 @@
 *.ko
 *.obj
 *.elf
+*.json
 
 # Linker output
 *.ilk
@@ -144,6 +145,7 @@ share/python-wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+.buildozer
 MANIFEST
 
 # PyInstaller

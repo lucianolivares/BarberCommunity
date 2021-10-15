@@ -1,5 +1,5 @@
 import firebase_admin
-from firebase_admin import firestore
+from firebase_admin import firestore, credentials, auth
 from typing import Union
 import requests
 
@@ -7,7 +7,8 @@ import requests
 class Base:
     def __init__(self):
         try:
-            self.cloud = firebase_admin.initialize_app(name='cloud')
+            cred = credentials.Certificate("barbercommunity-chile-firebase-adminsdk-jxse3-33a15ab491.json")
+            self.cloud = firebase_admin.initialize_app(cred, name='cloud')
         except:
             self.cloud = firebase_admin.get_app('cloud')
 

@@ -2,6 +2,7 @@ from kivy.uix.behaviors.button import ButtonBehavior
 from kivymd.uix.card import MDCard
 from kivy.lang import Builder
 from kivy.properties import ObjectProperty
+from View.DetailScreen.detail_screen import DetailScreenView
 
 Builder.load_string('''
 <BarberCard>:
@@ -56,7 +57,7 @@ class BarberCard(MDCard, ButtonBehavior):
         self.controller = kw['controller']
         self.barber = kw['data']
         self.id = kw['id']
-        self.on_release = self.get_barber
+        self.on_release = self.barber_detail
 
         for key, value in self.barber.items():
             if key == 'mobile':
@@ -66,5 +67,9 @@ class BarberCard(MDCard, ButtonBehavior):
             else:
                 self.ids[f'{key}'].text += str(value)
 
-    def get_barber(self):
-        self.controller.get_barber(self.id)
+    def barber_detail(self):
+        from kivymd.app import MDApp
+        app = MDApp.get_running_app()
+        screen = app.manager_screens.get_screen('detail screen')
+        screen.barber = self.id
+        app.manager_screens.current = 'detail screen'

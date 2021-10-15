@@ -23,17 +23,11 @@ class MainScreenView(MDScreen, Observer):
 
     def load_barbers(self, interval: Union[int, float]):
         self.ids.barbers_grid.clear_widgets()
-        barbers = self.controller.get_barbers()
+        barbers = self.model.barbers
         for barber, data in barbers.items():
             card = barber_card.BarberCard(data=data, id=barber, controller=self.controller)
             self.ids.barbers_grid.add_widget(card)
             self.ids.refresh_layout.refresh_done()
-
-    def load_barber(self):
-        #self.ids.barbers_grid.clear_widgets()
-        barber = self.model.barber
-        card = barber_card.BarberCard(data=barber, id=barber, controller=self.controller)
-        self.ids.barbers_grid.add_widget(card)
         
     def model_is_changed(self) -> NoReturn:
         if self.model.get_data_status:
