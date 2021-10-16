@@ -33,9 +33,9 @@ class MainScreenModel:
         self.get_data_status = False
         barbers = dict()
 
-        for barber in data:
-            id = barber.id
-            barber = barber.to_dict()
+        for barber in data.each():
+            id = barber.key()
+            barber = dict(barber.val())
             barbers[id] = barber
 
         self.barbers = barbers

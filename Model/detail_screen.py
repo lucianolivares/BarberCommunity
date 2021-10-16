@@ -3,6 +3,7 @@ import multitasking
 class DetailScreenModel:
     def __init__(self, base):
         self.base = base
+        self.id = str()
         self.barber = dict()
         self._get_data_status = None
         self._observers = []
@@ -23,7 +24,8 @@ class DetailScreenModel:
     def get_barber(self, id):
         self.get_data_status = False
         data = self.base.get_barber(id)
-        self.barber = data
+        self.id = id
+        self.barber = dict(data.val())
         self.get_data_status = True
 
     def add_observer(self, observer):

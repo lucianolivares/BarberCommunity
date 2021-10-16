@@ -1,18 +1,21 @@
-import firebase_admin
-from firebase_admin import firestore, credentials, auth
+from firebase import Firebase
 from typing import Union
 import requests
 
 
 class Base:
     def __init__(self):
-        try:
-            cred = credentials.Certificate("barbercommunity-chile-firebase-adminsdk-jxse3-33a15ab491.json")
-            self.cloud = firebase_admin.initialize_app(cred, name='cloud')
-        except:
-            self.cloud = firebase_admin.get_app('cloud')
+        config = {
+            "apiKey": "AIzaSyATIca3Yy3zEkepeVJ376p9F-Mypfx35E0",
+            "authDomain": "barbercommunity-chile.firebaseapp.com",
+            "databaseURL": "https://barbercommunity-chile-default-rtdb.firebaseio.com/",
+            "storageBucket": "gs://barbercommunity-chile.appspot.com/",
+            "serviceAccount": "barbercommunity-chile-firebase-adminsdk-jxse3-33a15ab491.json"
+        }
 
-        self.client = firestore.client(self.cloud)
+        firebase = Firebase(config)
+
+        self.db = firebase.database()
 
     def get_barbers_data(self) -> Union[list, None]:
         """
@@ -20,7 +23,7 @@ class Base:
         """
 
         try:
-            data = self.client.collection('barbershops').get()
+            data = self.db.child('barbershops').get()
         except requests.exceptions.ConnectionError:
             return None
         return data
@@ -31,8 +34,7 @@ class Base:
         """
 
         try:
-            data = self.client.collection('barbershops')
-            data = data.document(id).get().to_dict()
+            data = self.db.child('barbershops').child(id).get()
         except requests.exceptions.ConnectionError:
             return None
         return data
