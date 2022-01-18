@@ -21,7 +21,7 @@ multitasking==0.0.9
 Naked==0.1.31
 oauth2client==4.1.3
 packaging==21.0
-Pillow==8.3.2
+Pillow==9.0.0
 proto-plus==1.19.3
 protobuf==3.18.1
 pyasn1==0.4.8
