@@ -1,6 +1,6 @@
 CacheControl==0.12.6
 cachetools==4.2.4
-certifi==2021.5.30
+certifi==2022.12.7
 cffi==1.15.0
 charset-normalizer==2.0.6
 cryptography==35.0.0
